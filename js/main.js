@@ -576,7 +576,8 @@
      --------------------------------------------------------- */
   function initSmoothScroll() {
     if (!window.Lenis) return;
-    lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+    // інерційний скрол: сторінка плавно «доганяє» ціль (lerp), рухи коліщатка зливаються в один потік
+    lenis = new Lenis({ lerp: .07, wheelMultiplier: .9, smoothWheel: true, syncTouch: true, syncTouchLerp: .08, touchInertiaMultiplier: 28 });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis && lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
