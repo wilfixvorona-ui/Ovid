@@ -484,13 +484,30 @@
     }
     ticks.innerHTML = t;
 
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, ang = 0, seen = false;
+    // курсор стоїть рівно під мишкою — без інерції та розтягування (так не лагає)
+    let mx = -100, my = -100, seen = false, queued = false, lastCheck = 0;
+    // темні блоки, над якими курсор стає білим
+    const DARK = '.hero, .interior, .footer, .menu, .curtain, .card--navy, .card--blue, .card--photo, .plan-card--featured, .map, .btn--dark, .btn--blue, .burger, .lang__btn.is-active';
+    const checkTheme = () => {
+      const el = D.elementFromPoint(mx, my);
+      cur.classList.toggle('is-dark', !!(el && el.closest(DARK)));
+    };
+    const render = () => {
+      queued = false;
+      const p = `translate3d(${mx}px, ${my}px, 0)`;
+      ring.style.transform = p; dot.style.transform = p; label.style.transform = p;
+      const now = performance.now();
+      if (now - lastCheck > 90) { lastCheck = now; checkTheme(); }
+    };
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(render); } };
     cur.classList.add('is-hidden');
     window.addEventListener('mousemove', (e) => {
       mx = e.clientX; my = e.clientY;
-      if (!seen) { seen = true; rx = mx; ry = my; cur.classList.remove('is-hidden'); }
-      dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+      if (!seen) { seen = true; cur.classList.remove('is-hidden'); }
+      queue();
     }, { passive: true });
+    // під час скролу під курсором міняється фон — перевіряємо колір
+    window.addEventListener('scroll', () => { if (seen) { lastCheck = 0; queue(); } }, { passive: true });
     D.addEventListener('mouseleave', () => cur.classList.add('is-hidden'));
     D.addEventListener('mouseenter', () => cur.classList.remove('is-hidden'));
     window.addEventListener('mousedown', () => cur.classList.add('is-down'));
@@ -506,23 +523,6 @@
       cur.classList.toggle('is-link', !!link);
     });
 
-    const loop = () => {
-      const k = anim() ? .18 : 1;
-      rx += (mx - rx) * k; ry += (my - ry) * k;
-      const vx = mx - rx, vy = my - ry;
-      const speed = Math.hypot(vx, vy);
-      if (speed > 1.5) {
-        const target = Math.atan2(vy, vx);
-        let diff = target - ang;
-        diff = Math.atan2(Math.sin(diff), Math.cos(diff));
-        ang += diff * .25;
-      }
-      const s = anim() ? Math.min(speed / 140, .42) : 0;
-      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) rotate(${ang}rad) scale(${1 + s}, ${1 - s * .55})`;
-      label.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
-      requestAnimationFrame(loop);
-    };
-    requestAnimationFrame(loop);
   }
 
   /* ---------------------------------------------------------
@@ -577,7 +577,7 @@
   function initSmoothScroll() {
     if (!window.Lenis) return;
     // інерційний скрол: сторінка плавно «доганяє» ціль (lerp), рухи коліщатка зливаються в один потік
-    lenis = new Lenis({ lerp: .07, wheelMultiplier: .9, smoothWheel: true, syncTouch: true, syncTouchLerp: .08, touchInertiaMultiplier: 28 });
+    lenis = new Lenis({ lerp: .055, wheelMultiplier: .8, smoothWheel: true, syncTouch: true, syncTouchLerp: .07, touchInertiaMultiplier: 28 });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis && lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
