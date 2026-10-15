@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ovid — дім у Карпатах</title>
+  <meta name="description" content="Ovid — сучасний будинок в оренду в Карпатах на висоті 1 240 м. Камін, сауна, чан і панорама гір з кожного вікна.">
+  <meta name="theme-color" content="#001841">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%23001841'/%3E%3Cpath d='M12 44 26 24l8 10 6-7 12 17Z' fill='%23A8B681'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/hero.png">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Ставимо прапорці до рендеру, щоб не було «стрибка» контенту
+    (function () {
+      var d = document.documentElement, m = null;
+      try { m = localStorage.getItem('ovid-motion'); } catch (e) {}
+      var reduced = m ? m === 'off' : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      d.classList.add('js');
+      if (reduced) d.classList.add('reduced'); else d.classList.add('anim');
+    })();
+  </script>
+</head>
+<body>
+
+<!-- ============ PRELOADER ============ -->
+<div class="preloader" aria-hidden="true">
+  <svg class="preloader__ridge" fill="none"><path /><circle r="8" /></svg>
+  <span class="brand-logo preloader__brand"></span>
+  <span class="preloader__count"><span data-preload-count>0</span> м</span>
+</div>
+
+<!-- ============ CURSOR ============ -->
+<div class="cursor" aria-hidden="true">
+  <div class="cursor__ring">
+    <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" /><g class="cursor__ticks"></g></svg>
+  </div>
+  <div class="cursor__dot"></div>
+  <div class="cursor__label"><span></span></div>
+</div>
+
+<!-- ============ ALTIMETER (scroll progress) ============ -->
+<div class="altimeter" aria-hidden="true">
+  <div class="altimeter__value"><span data-alt>420</span><small>м</small></div>
+  <div class="altimeter__scale"><div class="altimeter__marker"></div></div>
+  <div class="altimeter__label" data-alt-label>Підйом</div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <div class="header__bar">
+    <a href="#top" class="logo" data-scroll-to aria-label="Ovid">
+      <span class="brand-logo logo__img"></span>
+    </a>
+    <nav class="nav" aria-label="Головне меню">
+      <a href="#about" data-scroll-to data-i18n="nav.about">Про дім</a>
+      <a href="#interior" data-scroll-to data-i18n="nav.interior">Інтер'єр</a>
+      <a href="#pricing" data-scroll-to data-i18n="nav.pricing">Ціни</a>
+      <a href="#reviews" data-scroll-to data-i18n="nav.reviews">Відгуки</a>
+      <a href="#faq" data-scroll-to data-i18n="nav.faq">FAQ</a>
+      <a href="#location" data-scroll-to data-i18n="nav.location">Локація</a>
+    </nav>
+      <div class="header__contacts">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="6"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></svg></a>
+        <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21 4 3 11l6 2 2 6 3-4 5 4z M9 13l9-7"/></svg></a>
+        <a href="#" aria-label="Viber"><svg viewBox="0 0 24 24"><path d="M12 3c5 0 8 2 8 7s-3 7-8 7l-4 3v-3.5C5 15 4 13 4 10c0-5 3-7 8-7z M10 8c0 3 2 5 5 5"/></svg></a>
+        <a href="tel:+380671234567" class="header__phone">+38 (067) 123-45-67</a>
+      </div>
+    <div class="header__actions">
+      <div class="lang" role="group" aria-label="Мова">
+        <button class="lang__btn is-active" data-lang="ua">UA</button>
+        <button class="lang__btn" data-lang="en">EN</button>
+        <span class="lang__pill"></span>
+      </div>
+      <button class="motion-toggle" data-motion-toggle aria-pressed="true" data-i18n-aria="motion.aria" aria-label="Увімкнути або вимкнути анімації">
+        <span class="motion-toggle__icon"><i></i><i></i><i></i></span>
+      </button>
+      <a href="#booking" class="btn btn--dark btn--sm header__cta" data-scroll-to data-magnetic>
+        <span class="btn__label"><span data-i18n="cta.book">Забронювати</span><span aria-hidden="true" data-i18n="cta.book">Забронювати</span></span>
+      </a>
+      <button class="burger" aria-label="Меню" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" aria-hidden="true">
+  <nav class="menu__nav">
+    <a href="#about" data-scroll-to><small>01</small><span data-i18n="nav.about">Про дім</span></a>
+    <a href="#interior" data-scroll-to><small>02</small><span data-i18n="nav.interior">Інтер'єр</span></a>
+    <a href="#pricing" data-scroll-to><small>03</small><span data-i18n="nav.pricing">Ціни</span></a>
+    <a href="#reviews" data-scroll-to><small>04</small><span data-i18n="nav.reviews">Відгуки</span></a>
+    <a href="#faq" data-scroll-to><small>05</small><span data-i18n="nav.faq">FAQ</span></a>
+    <a href="#location" data-scroll-to><small>06</small><span data-i18n="nav.location">Локація</span></a>
+  </nav>
+  <div class="menu__foot">
+    <a href="tel:+380671234567" class="menu__phone">+380 67 123 45 67</a>
+    <a href="#booking" class="btn btn--light" data-scroll-to><span class="btn__label"><span data-i18n="cta.book">Забронювати</span><span aria-hidden="true" data-i18n="cta.book">Забронювати</span></span></a>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" data-alt-name="hero">
+    <div class="hero__frame">
+      <div class="hero__media">
+        <img src="assets/img/hero.png" alt="Будинок Ovid серед смерек на тлі Карпатських гір у тумані" data-i18n-alt="hero.alt" fetchpriority="high">
+      </div>
+      <div class="hero__fog hero__fog--1"></div>
+      <div class="hero__fog hero__fog--2"></div>
+
+      <div class="hero__content">
+        <h1 class="visually-hidden">Ovid House</h1>
+        <div class="hero__row hero__row--top">
+          <span class="hero__word" data-letters aria-hidden="true">OVID</span>
+          <div class="hero__aside">
+            <a href="#interior" class="hero__thumb" data-scroll-to data-hero-fade data-cursor data-cursor-label="cursor.interior" data-i18n-aria="hero.thumb" aria-label="Переглянути інтерʼєр"><img src="assets/img/stove.jpg" alt=""><span class="hero__thumb-tag"><span data-i18n="hero.thumbTag">Інтерʼєр</span><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+            <p class="hero__tagline" data-split data-hero-split data-i18n="hero.title">Тиша, що живе над хмарами</p>
+          </div>
+        </div>
+        <div class="hero__row hero__row--bottom">
+          <a href="#booking" class="hero__cta" data-scroll-to data-hero-fade data-magnetic>
+            <span data-i18n="hero.cta">Забронювати дати</span>
+            <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+          <ul class="hero__list" data-hero-fade>
+            <li data-i18n="hero.l1">Камін і сауна</li>
+            <li data-i18n="hero.l2">Гарячий чан</li>
+            <li data-i18n="hero.l3">До шести гостей</li>
+            <li data-i18n="hero.l4">1 240 м над морем</li>
+          </ul>
+          <span class="hero__word hero__word--house" data-letters aria-hidden="true">HOUSE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT / MANIFESTO ============ -->
+  <section class="about section" id="about" data-alt-name="about">
+    <div class="container">
+      <p class="eyebrow" data-fade><span class="dot"></span><span data-i18n="about.eyebrow">Про дім</span></p>
+      <p class="manifesto" data-scrub data-i18n="about.text">Ovid — будинок для повільних ранків. <span class="pill-img"><img src="assets/img/fog.jpg" alt=""></span> Прокидаєшся від тиші, п'єш каву під шум смерек, а ввечері дивишся, як туман <span class="pill-img"><img src="assets/img/stove.jpg" alt=""></span> сповзає з гір просто у вікна вітальні.</p>
+
+      <ul class="stats" data-stagger>
+        <li data-fade><b><span data-count="1240">0</span><small data-i18n="unit.m">м</small></b><span data-i18n="stats.alt">над рівнем моря</span></li>
+        <li data-fade><b><span data-count="140">0</span><small>м²</small></b><span data-i18n="stats.area">простору й світла</span></li>
+        <li data-fade><b><span data-count="6">0</span></b><span data-i18n="stats.guests">гостей комфортно</span></li>
+        <li data-fade><b><span data-count="3">0</span></b><span data-i18n="stats.bed">окремі спальні</span></li>
+        <li data-fade><b><span data-count="24">0</span><small data-i18n="unit.km">км</small></b><span data-i18n="stats.bukovel">до Буковеля</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="features section" id="features" data-alt-name="features">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow" data-fade><span class="dot"></span><span data-i18n="feat.eyebrow">Що чекає всередині</span></p>
+        <h2 class="h2" data-split data-i18n="feat.title">Усе для відпочинку, <em>нічого зайвого</em></h2>
+      </div>
+
+      <div class="bento" data-stagger>
+        <article class="card card--photo card--a" data-fade data-tilt data-cursor="view" data-cursor-label="cursor.view">
+          <div class="card__img"><img src="assets/img/sauna.jpg" alt="Фінська сауна з вікном на засніжені гори" loading="lazy" decoding="async" data-i18n-alt="feat.sauna.alt"></div>
+          <div class="card__body">
+            <span class="tag" data-i18n="feat.included">Включено</span>
+            <h3 data-i18n="feat.sauna">Фінська сауна з видом на вершини</h3>
+          </div>
+        </article>
+
+        <article class="card card--blue card--b" data-fade data-tilt>
+          <svg class="icon" viewBox="0 0 48 48"><path d="M6 30h36v4a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8z"/><path d="M16 22c-2-3 2-5 0-8M24 22c-2-3 2-5 0-8M32 22c-2-3 2-5 0-8"/></svg>
+          <div class="card__big">38°</div>
+          <h3 data-i18n="feat.tub">Гарячий чан під зорями</h3>
+          <p data-i18n="feat.tub.text">Дерев'яний чан на терасі з травами. Розпалюємо до вашого приїзду.</p>
+        </article>
+
+        <article class="card card--sage card--c" data-fade data-tilt>
+          <svg class="icon" viewBox="0 0 48 48"><path d="M24 42c-8 0-13-5-13-12 0-8 8-11 8-20 5 3 7 7 7 11 2-1 3-3 3-5 4 3 7 8 7 14 0 7-4 12-12 12z"/><path d="M24 42c-3 0-5-2-5-5 0-4 5-6 5-10 3 2 5 5 5 9 0 3-2 6-5 6z"/></svg>
+          <h3 data-i18n="feat.fire">Справжній камін</h3>
+          <p data-i18n="feat.fire.text">Дрова вже складені біля дверей — лишається тільки плед і какао.</p>
+        </article>
+
+        <article class="card card--navy card--d" data-fade data-tilt>
+          <svg class="icon" viewBox="0 0 48 48"><path d="M6 18a26 26 0 0 1 36 0M12 25a17 17 0 0 1 24 0M18 32a8 8 0 0 1 12 0"/><circle cx="24" cy="38" r="2"/></svg>
+          <div class="card__big">200<small> Mb/s</small></div>
+          <h3 data-i18n="feat.wifi">Starlink і резервне живлення</h3>
+          <p data-i18n="feat.wifi.text">Інтернет і світло є завжди — навіть якщо в селі відключення.</p>
+        </article>
+
+        <article class="card card--photo card--e" data-fade data-tilt data-cursor="view" data-cursor-label="cursor.view">
+          <div class="card__img"><img src="assets/img/kitchen.jpg" alt="Простора кухня з дерев'яним островом" loading="lazy" decoding="async" data-i18n-alt="feat.kitchen.alt"></div>
+          <div class="card__body">
+            <h3 data-i18n="feat.kitchen">Кухня, де є все — від турки до посудомийки</h3>
+          </div>
+        </article>
+
+        <div class="chips card--f" data-fade>
+          <span class="chip"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="5"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg><span data-i18n="chip.parking">Паркінг на 2 авто</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24"><circle cx="7" cy="9" r="2"/><circle cx="17" cy="9" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><path d="M12 12c-3 0-6 4-6 7 0 2 2 2 6 1 4 1 6 1 6-1 0-3-3-7-6-7z"/></svg><span data-i18n="chip.pets">Можна з тваринами</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24"><path d="M4 10h16a8 8 0 0 1-16 0zM8 18l-2 4M16 18l2 4M9 6c0-2 2-2 2-4M14 6c0-2 2-2 2-4"/></svg><span data-i18n="chip.bbq">Мангал і тераса</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24"><path d="M3 10h18v8H3zM3 10V6M21 10V6M7 18v3M17 18v3M8 10V7h8v3"/></svg><span data-i18n="chip.baby">Дитяче ліжечко</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6zM6 8h12M10 12h4"/></svg><span data-i18n="chip.linen">Постіль і рушники</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></svg><span data-i18n="chip.self">Самозаселення 24/7</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTERIOR (horizontal) ============ -->
+  <svg class="svg-defs" aria-hidden="true" focusable="false">
+    <filter id="liquid" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+  <section class="interior" id="interior" data-alt-name="interior">
+    <div class="interior__pin">
+      <div class="interior__head container">
+        <div>
+          <p class="eyebrow eyebrow--light" data-fade><span class="dot"></span><span data-i18n="int.eyebrow">Огляд хати</span></p>
+          <h2 class="h2" data-split data-i18n="int.title">Зайдіть <em>усередину</em></h2>
+        </div>
+        <div class="interior__progress"><span data-int-current>01</span><i><b data-int-bar></b></i><span>06</span></div>
+      </div>
+
+      <div class="interior__track" data-cursor="drag" data-cursor-label="cursor.drag">
+        <article class="room">
+          <div class="room__img"><img src="assets/img/living.jpg" alt="Вітальня з панорамним вікном на гори" loading="lazy" decoding="async" data-i18n-alt="room1.alt"></div>
+          <div class="room__info">
+            <span class="room__num">01</span>
+            <h3 data-i18n="room1">Вітальня з панорамою</h3>
+            <p class="room__specs"><span data-i18n="room1.s1">42 м²</span><span data-i18n="room1.s2">Вікно 6 м</span><span data-i18n="room1.s3">Проєктор</span></p>
+          </div>
+        </article>
+        <article class="room">
+          <div class="room__img"><img src="assets/img/stove.jpg" alt="Куточок з піччю та скляними стінами в ліс" loading="lazy" decoding="async" data-i18n-alt="room2.alt"></div>
+          <div class="room__info">
+            <span class="room__num">02</span>
+            <h3 data-i18n="room2">Каміновий куточок</h3>
+            <p class="room__specs"><span data-i18n="room2.s1">Чавунна піч</span><span data-i18n="room2.s2">Вихід на терасу</span></p>
+          </div>
+        </article>
+        <article class="room">
+          <div class="room__img"><img src="assets/img/kitchen.jpg" alt="Кухня-їдальня з островом" loading="lazy" decoding="async" data-i18n-alt="room3.alt"></div>
+          <div class="room__info">
+            <span class="room__num">03</span>
+            <h3 data-i18n="room3">Кухня-їдальня</h3>
+            <p class="room__specs"><span data-i18n="room3.s1">Стіл на 8</span><span data-i18n="room3.s2">Кавомашина</span><span data-i18n="room3.s3">Духовка</span></p>
+          </div>
+        </article>
+        <article class="room">
+          <div class="room__img"><img src="assets/img/bedroom.jpg" alt="Світла спальня з видом на гори" loading="lazy" decoding="async" data-i18n-alt="room4.alt"></div>
+          <div class="room__info">
+            <span class="room__num">04</span>
+            <h3 data-i18n="room4">Три спальні</h3>
+            <p class="room__specs"><span data-i18n="room4.s1">Ліжка 180×200</span><span data-i18n="room4.s2">Блекаут-штори</span></p>
+          </div>
+        </article>
+        <article class="room">
+          <div class="room__img"><img src="assets/img/bath.jpg" alt="Ванна кімната з окремою ванною" loading="lazy" decoding="async" data-i18n-alt="room5.alt"></div>
+          <div class="room__info">
+            <span class="room__num">05</span>
+            <h3 data-i18n="room5">Дві ванні кімнати</h3>
+            <p class="room__specs"><span data-i18n="room5.s1">Окрема ванна</span><span data-i18n="room5.s2">Тепла підлога</span></p>
+          </div>
+        </article>
+        <article class="room room--plan">
+          <div class="plan">
+            <span class="room__num">06</span>
+            <h3 data-i18n="room6">План будинку</h3>
+            <svg class="plan__svg" viewBox="0 0 320 220" fill="none">
+              <rect x="10" y="10" width="300" height="200" rx="18"/>
+              <path d="M130 10v120M10 130h190M200 130v80M240 10v80M240 90h70M130 70h110"/>
+              <text x="40" y="70" data-i18n="plan.living">Вітальня</text>
+              <text x="150" y="45" data-i18n="plan.kitchen">Кухня</text>
+              <text x="252" y="55" data-i18n="plan.bed1">Спальня</text>
+              <text x="40" y="175" data-i18n="plan.bed2">Спальня</text>
+              <text x="215" y="160" data-i18n="plan.bed3">Спальня</text>
+              <text x="150" y="105" data-i18n="plan.bath">Ванна</text>
+            </svg>
+            <ul class="plan__list">
+              <li><b>140 м²</b><span data-i18n="plan.area">загальна площа</span></li>
+              <li><b>3</b><span data-i18n="plan.beds">спальні</span></li>
+              <li><b>2</b><span data-i18n="plan.baths">санвузли</span></li>
+              <li><b>60 м²</b><span data-i18n="plan.terrace">тераса</span></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="pricing section" id="pricing" data-alt-name="pricing">
+    <div class="container">
+      <div class="section-head section-head--row">
+        <div>
+          <p class="eyebrow" data-fade><span class="dot"></span><span data-i18n="price.eyebrow">Ціни</span></p>
+          <h2 class="h2" data-split data-i18n="price.title">Чесно. <em>Без сюрпризів</em></h2>
+        </div>
+        <div class="season" role="tablist" data-fade>
+          <button class="season__btn is-active" data-season="summer" role="tab" aria-selected="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/></svg>
+            <span data-i18n="season.summer">Літо</span>
+          </button>
+          <button class="season__btn" data-season="winter" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24"><path d="M12 2v20M3.5 7l17 10M3.5 17l17-10M9 4l3 2 3-2M9 20l3-2 3 2"/></svg>
+            <span data-i18n="season.winter">Зима</span>
+          </button>
+          <span class="season__pill"></span>
+        </div>
+      </div>
+
+      <div class="plans" data-stagger>
+        <article class="plan-card" data-fade>
+          <h3 data-i18n="plan1.name">Будні</h3>
+          <p class="plan-card__sub" data-i18n="plan1.sub">Неділя — четвер</p>
+          <div class="price"><span class="price__cur" data-cur>₴</span><span class="price__num" data-price="weekday">5 200</span><span class="price__per" data-i18n="per.night">/ ніч</span></div>
+          <ul class="checks">
+            <li data-i18n="plan1.f1">До 6 гостей без доплат</li>
+            <li data-i18n="plan1.f2">Сауна включена</li>
+            <li data-i18n="plan1.f3">Мінімум 2 ночі</li>
+          </ul>
+          <a href="#booking" class="btn btn--outline" data-scroll-to data-plan-pick="weekday"><span class="btn__label"><span data-i18n="cta.choose">Обрати</span><span aria-hidden="true" data-i18n="cta.choose">Обрати</span></span></a>
+        </article>
+
+        <article class="plan-card plan-card--featured" data-fade>
+          <span class="plan-card__badge" data-i18n="plan2.badge">Найчастіше обирають</span>
+          <h3 data-i18n="plan2.name">Вихідні</h3>
+          <p class="plan-card__sub" data-i18n="plan2.sub">П'ятниця — субота</p>
+          <div class="price"><span class="price__cur" data-cur>₴</span><span class="price__num" data-price="weekend">6 500</span><span class="price__per" data-i18n="per.night">/ ніч</span></div>
+          <ul class="checks">
+            <li data-i18n="plan2.f1">До 6 гостей без доплат</li>
+            <li data-i18n="plan2.f2">Сауна + перше розпалювання чану</li>
+            <li data-i18n="plan2.f3">Пізній виїзд до 14:00</li>
+          </ul>
+          <a href="#booking" class="btn btn--blue" data-scroll-to data-magnetic data-plan-pick="weekend"><span class="btn__label"><span data-i18n="cta.choose">Обрати</span><span aria-hidden="true" data-i18n="cta.choose">Обрати</span></span></a>
+        </article>
+
+        <article class="plan-card" data-fade>
+          <h3 data-i18n="plan3.name">Тиждень</h3>
+          <p class="plan-card__sub" data-i18n="plan3.sub">7 ночей · знижка 15%</p>
+          <div class="price"><span class="price__cur" data-cur>₴</span><span class="price__num" data-price="week">32 000</span><span class="price__per" data-i18n="per.stay">/ 7 ночей</span></div>
+          <ul class="checks">
+            <li data-i18n="plan3.f1">Чан щодня включено</li>
+            <li data-i18n="plan3.f2">Прибирання в середині тижня</li>
+            <li data-i18n="plan3.f3">Трансфер з вокзалу</li>
+          </ul>
+          <a href="#booking" class="btn btn--outline" data-scroll-to data-plan-pick="week"><span class="btn__label"><span data-i18n="cta.choose">Обрати</span><span aria-hidden="true" data-i18n="cta.choose">Обрати</span></span></a>
+        </article>
+      </div>
+
+      <div class="rules" data-stagger>
+        <div class="rule" data-fade><small data-i18n="rule.in">Заїзд</small><b>15:00</b></div>
+        <div class="rule" data-fade><small data-i18n="rule.out">Виїзд</small><b>12:00</b></div>
+        <div class="rule" data-fade><small data-i18n="rule.deposit">Депозит, повертаємо</small><b data-i18n="rule.deposit.v">2 000 ₴</b></div>
+        <div class="rule" data-fade><small data-i18n="rule.tub">Додатковий чан</small><b data-i18n="rule.tub.v">1 200 ₴</b></div>
+        <div class="rule" data-fade><small data-i18n="rule.pets">Тварини</small><b data-i18n="rule.pets.v">+300 ₴ / ніч</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section class="reviews section" id="reviews" data-alt-name="reviews">
+    <div class="container reviews__head">
+      <div>
+        <p class="eyebrow" data-fade><span class="dot"></span><span data-i18n="rev.eyebrow">Відгуки гостей</span></p>
+        <h2 class="h2" data-split data-i18n="rev.title">Повертаються <em>знову</em></h2>
+      </div>
+      <div class="score" data-fade>
+        <div class="score__num"><span data-count="4.97" data-decimals="2">0</span><small>/5</small></div>
+        <div class="score__stars" aria-hidden="true">★★★★★</div>
+        <p data-i18n="rev.count">312 відгуків · 41% гостей повертаються</p>
+      </div>
+    </div>
+    <div class="marquee" data-reviews-row="0"></div>
+    <div class="marquee marquee--reverse" data-reviews-row="1"></div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="faq section" id="faq" data-alt-name="faq">
+    <div class="container faq__grid">
+      <div class="faq__aside">
+        <p class="eyebrow" data-fade><span class="dot"></span><span data-i18n="faq.eyebrow">Питання</span></p>
+        <h2 class="h2" data-split data-i18n="faq.title">Що варто <em>знати</em></h2>
+        <div class="faq__help" data-fade>
+          <p data-i18n="faq.help">Не знайшли відповідь? Подзвоніть — розкажемо все за дві хвилини.</p>
+          <a href="tel:+380671234567" class="btn btn--dark" data-magnetic><span class="btn__label"><span>+380 67 123 45 67</span><span aria-hidden="true">+380 67 123 45 67</span></span></a>
+        </div>
+      </div>
+      <div class="accordion" data-stagger>
+        <div class="acc" data-fade><button class="acc__q" aria-expanded="false"><span data-i18n="faq.q1">О котрій заїзд і виїзд?</span><i></i></button><div class="acc__a"><div><p data-i18n="faq.a1">Заїзд з 15:00, виїзд до 12:00. Якщо будинок вільний, ранній заїзд або пізній виїзд — безкоштовно, просто напишіть нам заздалегідь.</p></div></div></div>
+        <div class="acc" data-fade><button class="acc__q" aria-expanded="false"><span data-i18n="faq.q2">Скільки людей вміщує будинок?</span><i></i></button><div class="acc__a"><div><p data-i18n="faq.a2">До 6 дорослих у трьох спальнях. Для дітей до 3 років є ліжечко та стільчик для годування — вони не враховуються в кількість гостей.</p></div></div></div>
+        <div class="acc" data-fade><button class="acc__q" aria-expanded="false"><span data-i18n="faq.q3">Чи можна з тваринами?</span><i></i></button><div class="acc__a"><div><p data-i18n="faq.a3">Так, з собаками й котами можна. Доплата 300 ₴ за ніч — на додаткове прибирання. Миски й лежанку надамо.</p></div></div></div>
+        <div class="acc" data-fade><button class="acc__q" aria-expanded="false"><span data-i18n="faq.q4">Чи потрібна передоплата?</span><i></i></button><div class="acc__a"><div><p data-i18n="faq.a4">Для підтвердження бронювання — 30% вартості. Решту сплачуєте при заїзді готівкою або карткою.</p></div></div></div>
+        <div class="acc" data-fade><button class="acc__q" aria-expanded="false"><span data-i18n="faq.q5">Як скасувати бронювання?</span><i></i></button><div class="acc__a"><div><p data-i18n="faq.a5">Безкоштовно — за 14 днів до заїзду. Пізніше передоплату можна перенести на інші дати протягом пів року.</p></div></div></div>
+        <div class="acc" data-fade><button class="acc__q" aria-expanded="false"><span data-i18n="faq.q6">Що буде, якщо вимкнуть світло?</span><i></i></button><div class="acc__a"><div><p data-i18n="faq.a6">Нічого не зміниться: будинок має сонячні панелі, акумулятори на 30 кВт·год і генератор. Starlink теж працює.</p></div></div></div>
+        <div class="acc" data-fade><button class="acc__q" aria-expanded="false"><span data-i18n="faq.q7">Як доїхати без авто?</span><i></i></button><div class="acc__a"><div><p data-i18n="faq.a7">Потягом до Ворохти чи Яремче, далі — наш трансфер за 600 ₴. Для гостей, які бронюють тиждень, трансфер безкоштовний.</p></div></div></div>
+        <div class="acc" data-fade><button class="acc__q" aria-expanded="false"><span data-i18n="faq.q8">Сауна і чан входять у вартість?</span><i></i></button><div class="acc__a"><div><p data-i18n="faq.a8">Сауна — завжди. Чан розпалюємо за 1 200 ₴ (вода, дрова, трави), а на вихідних перше розпалювання — від нас.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOCATION ============ -->
+  <section class="location section" id="location" data-alt-name="location">
+    <div class="container">
+      <div class="section-head section-head--row">
+        <div>
+          <p class="eyebrow" data-fade><span class="dot"></span><span data-i18n="loc.eyebrow">Локація</span></p>
+          <h2 class="h2" data-split data-i18n="loc.title">Далеко від міста, <em>близько до всього</em></h2>
+        </div>
+        <p class="location__addr" data-fade data-i18n="loc.addr">с. Яблуниця, Івано-Франківська обл.<br>48.3110° N, 24.4730° E</p>
+      </div>
+
+      <div class="location__grid">
+        <div class="map" data-fade data-cursor="view" data-cursor-label="cursor.map">
+          <svg class="map__svg" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid slice">
+            <g class="map__contours"></g>
+            <g class="map__routes"></g>
+            <g class="map__places"></g>
+          </svg>
+          <div class="map__pin">
+            <span class="map__pulse"></span><span class="map__pulse"></span>
+            <span class="map__pin-dot"><svg viewBox="0 0 40 24"><path d="M2 22 14 6l7 9 5-6 12 13Z"/></svg></span>
+            <span class="map__pin-label">OVID</span>
+          </div>
+          <div class="map__legend"><span></span><span data-i18n="loc.legend">горизонталі через 50 м</span></div>
+        </div>
+
+        <ul class="distances" data-stagger>
+          <li data-fade><span class="distances__name" data-i18n="loc.p1">Перевал Яблуницький</span><span class="distances__line"></span><b>3 <small data-i18n="unit.km">км</small></b></li>
+          <li data-fade><span class="distances__name" data-i18n="loc.p2">Буковель</span><span class="distances__line"></span><b>24 <small data-i18n="unit.km">км</small></b></li>
+          <li data-fade><span class="distances__name" data-i18n="loc.p3">Яремче</span><span class="distances__line"></span><b>28 <small data-i18n="unit.km">км</small></b></li>
+          <li data-fade><span class="distances__name" data-i18n="loc.p4">Ворохта, вокзал</span><span class="distances__line"></span><b>19 <small data-i18n="unit.km">км</small></b></li>
+          <li data-fade><span class="distances__name" data-i18n="loc.p5">Говерла, старт маршруту</span><span class="distances__line"></span><b>36 <small data-i18n="unit.km">км</small></b></li>
+          <li data-fade><span class="distances__name" data-i18n="loc.p6">Аеропорт Івано-Франківськ</span><span class="distances__line"></span><b>112 <small data-i18n="unit.km">км</small></b></li>
+          <li class="distances__note" data-fade>
+            <svg viewBox="0 0 24 24"><path d="M3 16V9a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v7M3 16h18v2H3zM7 18v2M17 18v2M7 12h10"/></svg>
+            <p data-i18n="loc.note">Асфальт до самих воріт — навіть узимку доїде будь-яке авто.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER / BOOKING ============ -->
+<footer class="footer" id="booking" data-alt-name="booking">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__intro">
+        <p class="eyebrow eyebrow--light" data-fade><span class="dot"></span><span data-i18n="foot.eyebrow">Бронювання</span></p>
+        <h2 class="h2" data-split data-i18n="foot.title">Ваші дні в горах <em>починаються тут</em></h2>
+        <p class="footer__lead" data-fade data-i18n="foot.lead">Залиште заявку або подзвоніть — підтвердимо дати протягом 15 хвилин.</p>
+        <a href="tel:+380671234567" class="footer__phone" data-fade data-magnetic>+380 67 123 45 67</a>
+        <div class="socials" data-fade>
+          <a href="#" aria-label="Telegram" data-magnetic><svg viewBox="0 0 24 24"><path d="M21 4 3 11l6 2 2 6 3-4 5 4z M9 13l9-7"/></svg></a>
+          <a href="#" aria-label="Viber" data-magnetic><svg viewBox="0 0 24 24"><path d="M12 3c5 0 8 2 8 7s-3 7-8 7l-4 3v-3.5C5 15 4 13 4 10c0-5 3-7 8-7z M10 8c0 3 2 5 5 5"/></svg></a>
+          <a href="#" aria-label="Instagram" data-magnetic><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="6"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></svg></a>
+          <a href="mailto:hello@ovid.house" class="socials__mail" data-magnetic>hello@ovid.house</a>
+        </div>
+      </div>
+
+      <form class="form" data-fade novalidate>
+        <div class="form__grid">
+          <label class="field"><input type="text" name="name" placeholder=" " required autocomplete="name"><span data-i18n="form.name">Ваше ім'я</span></label>
+          <label class="field"><input type="tel" name="phone" placeholder=" " required autocomplete="tel"><span data-i18n="form.phone">Телефон</span></label>
+          <label class="field"><input type="date" name="in" placeholder=" " class="has-value"><span data-i18n="book.in">Заїзд</span></label>
+          <label class="field"><input type="date" name="out" placeholder=" " class="has-value"><span data-i18n="book.out">Виїзд</span></label>
+          <div class="field field--guests">
+            <span data-i18n="book.guests">Гості</span>
+            <div class="stepper stepper--light" data-stepper data-min="1" data-max="6">
+              <button type="button" data-step="-1" aria-label="−">−</button>
+              <output data-stepper-value>2</output>
+              <button type="button" data-step="1" aria-label="+">+</button>
+            </div>
+          </div>
+          <div class="field field--plans">
+            <span data-i18n="form.plan">Тариф</span>
+            <div class="radio-pills">
+              <label><input type="radio" name="plan" value="weekday"><span data-i18n="plan1.name">Будні</span></label>
+              <label><input type="radio" name="plan" value="weekend" checked><span data-i18n="plan2.name">Вихідні</span></label>
+              <label><input type="radio" name="plan" value="week"><span data-i18n="plan3.name">Тиждень</span></label>
+            </div>
+          </div>
+          <label class="field field--wide"><textarea name="msg" rows="3" placeholder=" "></textarea><span data-i18n="form.msg">Побажання (необов'язково)</span></label>
+        </div>
+        <button type="submit" class="btn btn--blue btn--lg form__submit" data-magnetic>
+          <span class="btn__label"><span data-i18n="form.send">Надіслати заявку</span><span aria-hidden="true" data-i18n="form.send">Надіслати заявку</span></span>
+          <svg class="btn__arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="form__note" data-i18n="form.note">Натискаючи кнопку, ви погоджуєтесь на обробку даних. Жодного спаму.</p>
+
+        <div class="form__success" aria-live="polite">
+          <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="36"/><path d="M24 41l11 11 21-23"/></svg>
+          <h3 data-i18n="form.ok">Дякуємо!</h3>
+          <p data-i18n="form.ok.text">Заявку отримали. Передзвонимо протягом 15 хвилин.</p>
+          <button type="button" class="btn btn--outline-light" data-form-reset><span class="btn__label"><span data-i18n="form.again">Нова заявка</span><span aria-hidden="true" data-i18n="form.again">Нова заявка</span></span></button>
+        </div>
+      </form>
+    </div>
+
+    <div class="wordmark" aria-hidden="true"><span>O</span><span>V</span><span>I</span><span>D</span></div>
+
+    <div class="footer__bottom">
+      <span class="footer__brand"><span class="brand-logo"></span>© 2026 Ovid House</span>
+      <a href="#" data-cookie-open data-i18n="foot.cookie">Політика cookie</a>
+      <button class="footer__motion" data-motion-toggle><span data-i18n="foot.motion">Анімації</span>: <b data-motion-state>ON</b></button>
+      <span data-i18n="foot.concept">Концепт-проєкт. Бренд вигаданий</span>
+      <a href="#top" data-scroll-to class="footer__up"><span data-i18n="foot.up">Нагору</span> ↑</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ COOKIE ============ -->
+<div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie">
+  <div class="cookie__icon" aria-hidden="true">
+    <svg viewBox="0 0 40 40"><path d="M20 4a16 16 0 1 0 16 16 6 6 0 0 1-7-6 6 6 0 0 1-6-6 4 4 0 0 1-3-4z"/><circle cx="14" cy="17" r="2"/><circle cx="21" cy="26" r="2"/><circle cx="27" cy="21" r="1.5"/></svg>
+  </div>
+  <div class="cookie__text">
+    <p data-i18n="cookie.text">Ми використовуємо cookie, щоб сайт працював швидше. А якщо анімації заважають — їх можна вимкнути.</p>
+    <div class="cookie__actions">
+      <button class="btn btn--dark btn--sm" data-cookie-accept><span class="btn__label"><span data-i18n="cookie.ok">Добре</span><span aria-hidden="true" data-i18n="cookie.ok">Добре</span></span></button>
+      <button class="cookie__motion" data-motion-toggle><span data-i18n="cookie.motion">Вимкнути анімації</span></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
