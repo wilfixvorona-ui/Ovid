@@ -23,15 +23,23 @@
   const anim = () => html.classList.contains('anim');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+  // мова в адресі: /ua або /en (на file:// адресу не чіпаємо)
+  const canRoute = /^https?:$/.test(location.protocol);
+  const langFromPath = () => (location.pathname.match(/^\/(ua|en)(?:\/|$)/) || [])[1];
+  function setUrl(lang, replace) {
+    if (!canRoute || location.pathname === '/' + lang) return;
+    history[replace ? 'replaceState' : 'pushState']({ lang }, '', '/' + lang + location.search + location.hash);
+  }
+
   const state = {
-    lang: store.get('ovid-lang') === 'en' ? 'en' : 'ua',
+    lang: langFromPath() || (store.get('ovid-lang') === 'en' ? 'en' : 'ua'),
     season: 'summer',
   };
   const ui = (k) => I.ui[state.lang][k];
   const fmt = (n) => new Intl.NumberFormat(state.lang === 'ua' ? 'uk-UA' : 'en-US').format(Math.round(n));
 
   let lenis = null;
-  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+  if (hasGsap) { gsap.registerPlugin(ScrollTrigger); ScrollTrigger.config({ ignoreMobileResize: true }); }
 
   /* ---------------------------------------------------------
      Word splitting
@@ -163,8 +171,9 @@
   curtain.innerHTML = '<span></span>';
   D.body.appendChild(curtain);
 
-  function switchLang(lang) {
+  function switchLang(lang, fromHistory) {
     if (lang === state.lang) return;
+    if (!fromHistory) setUrl(lang);
     if (!anim()) { applyLang(lang); return; }
     $('span', curtain).textContent = lang === 'en' ? 'English' : 'Українська';
     gsap.timeline()
@@ -177,6 +186,8 @@
       .set(curtain, { visibility: 'hidden' });
   }
   $$('.lang__btn').forEach((b) => b.addEventListener('click', () => switchLang(b.dataset.lang)));
+  // кнопки «назад / вперед» у браузері теж перемикають мову
+  window.addEventListener('popstate', () => { const l = langFromPath(); if (l) switchLang(l, true); });
 
   /* ---------------------------------------------------------
      Manifesto: слова «проявляються» під скрол
@@ -377,6 +388,8 @@
     burger.setAttribute('aria-expanded', String(open));
     menu.setAttribute('aria-hidden', String(!open));
     if (lenis) open ? lenis.stop() : lenis.start();
+    // перерахувати стан хедера (над hero він білий — у відкритому меню це не потрібно)
+    window.dispatchEvent(new Event('scroll'));
   }
   burger.addEventListener('click', () => setMenu(!D.body.classList.contains('menu-open')));
   D.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
@@ -626,7 +639,8 @@
 
     // інтерʼєр — горизонтальний трек з піном
     const mm = gsap.matchMedia();
-    mm.add('(min-width: 761px)', () => {
+    // пін і горизонтальний скрол — на всіх екранах, включно з мобільними
+    mm.add('(min-width: 0px)', () => {
       const track = $('.interior__track');
       const pad = () => parseFloat(getComputedStyle(track).paddingLeft) || 0;
       const rooms = $$('.room', track);
@@ -692,11 +706,6 @@
       };
       rooms.forEach((room) => room.addEventListener('mouseenter', onEnter));
       return () => rooms.forEach((room) => room.removeEventListener('mouseenter', onEnter));
-    });
-    mm.add('(max-width: 760px)', () => {
-      $$('.room').forEach((room) => {
-        gsap.from(room, { scale: .9, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: room, start: 'top 90%' } });
-      });
     });
 
     // карта — маршрути «прокладаються»
@@ -836,6 +845,7 @@
   initCursor();
   initScrollUI();
   applyLang(state.lang, false);
+  setUrl(state.lang, true);
 
   intro().then(() => {
     if (!store.get('ovid-cookie')) setTimeout(showCookie, anim() ? 900 : 400);
